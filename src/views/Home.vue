@@ -16,25 +16,14 @@
           <th>{{ format(addDays(new Date(), 2), "EEE do") }}</th>
           <th>{{ format(addDays(new Date(), 3), "EEE do") }}</th>
         </tr>
-        <tr v-for="entry in entries" :key="entry.patientNumber">
-          <td>{{ entry.wardNumber }}</td>
-          <td>
-            <p>
-              <strong>{{ entry.patientName }}</strong>
-            </p>
-            <p>
-              <small>{{ entry.patientNumber }}</small>
-            </p>
-            <p>{{ entry.patientHistory }}</p>
-          </td>
-          <td>{{ entry.patientHistory }}</td>
-          <td>{{ entry.patientHistory }}</td>
-          <td>{{ entry.patientHistory }}</td>
-          <td>{{ entry.patientHistory }}</td>
-        </tr>
+        <PatientRow
+          v-for="entry in entries"
+          :entry="entry"
+          :key="entry.patientNumber"
+        />
       </table>
     </div>
-    <AddEntryModal
+    <AddPatientModal
       v-if="addEntryModalIsOpen"
       @close="addEntryModalIsOpen = false"
     />
@@ -45,10 +34,11 @@
 import Vue from "vue";
 import { IEntry, generate as generateEntries } from "@/types/IEntry";
 import { format, addDays } from "date-fns";
-import AddEntryModal from "@/components/AddEntryModal.vue";
+import AddPatientModal from "@/components/AddPatientModal.vue";
+import PatientRow from "@/components/PatientRow.vue";
 export default Vue.extend({
   name: "Home",
-  components: { AddEntryModal },
+  components: { AddPatientModal, PatientRow },
   data() {
     return {
       entries: [] as IEntry[],

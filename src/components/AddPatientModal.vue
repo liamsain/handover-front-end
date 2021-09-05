@@ -1,11 +1,8 @@
 <template>
   <Modal @close="$emit('close')">
-    <div
-      slot="header"
-      style="display: flex; justify-content: space-between; align-items: center"
-    >
+    <div slot="header" class="add-entry-modal__title">
       <h3>Add patient</h3>
-      <p><button @click="$emit('close')">X</button></p>
+      <button @click="$emit('close')">X</button>
     </div>
     <div slot="body">
       <div class="add-entry-modal__text-field">
@@ -38,7 +35,47 @@
           <textarea
             id="add-entry__patient-history"
             placeholder="Patient history"
-            style="width: 100%"
+            rows="3"
+          />
+        </label>
+      </div>
+      <div class="add-entry-modal__text-area">
+        <label for="add-entry__today-notes">
+          Today notes<br />
+          <textarea
+            id="add-entry__today-notes"
+            placeholder="Today notes"
+            rows="3"
+          />
+        </label>
+      </div>
+      <div class="add-entry-modal__text-area">
+        <label for="add-entry__tomorrow-notes">
+          Tomorrow notes<br />
+          <textarea
+            id="add-entry__tomorrow-notes"
+            placeholder="Tomorrow notes"
+            rows="3"
+          />
+        </label>
+      </div>
+      <div class="add-entry-modal__text-area">
+        <label for="add-entry__day-after-tomorrow-notes">
+          Day after tomorrow notes<br />
+          <textarea
+            id="add-entry__day-after-tomorrow-notes"
+            placeholder="Day after tomorrow notes"
+            rows="3"
+          />
+        </label>
+      </div>
+
+      <div class="add-entry-modal__text-area">
+        <label for="add-entry__three-days-from-now-notes">
+          Three days from now notes<br />
+          <textarea
+            id="add-entry__three-days-from-now-notes"
+            placeholder="Three days from now notes"
             rows="3"
           />
         </label>
@@ -51,12 +88,18 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue, { PropType } from "vue";
 import Modal from "./Modal.vue";
+import AddPatientForm from "@/forms/AddPatientForm";
 
 export default Vue.extend({
-  name: "AddEntryModal",
+  name: "AddPatientModal",
   components: { Modal },
+  props: {
+    form: {
+      type: Object as PropType<AddPatientForm>,
+    },
+  },
   mounted() {
     const ref = this.$refs.wardNumberField as any;
     if (ref) {
@@ -66,7 +109,17 @@ export default Vue.extend({
 });
 </script>
 
-<style>
+<style scoped>
+.add-entry-modal__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0 8px;
+}
+
+.add-entry-modal__title h3 {
+  margin: 0;
+}
 .add-entry-modal__text-field {
   margin-bottom: 8px;
 }
@@ -82,5 +135,6 @@ export default Vue.extend({
 
 textarea {
   font-family: Avenir, Helvetica, Arial, sans-serif;
+  width: 100%;
 }
 </style>

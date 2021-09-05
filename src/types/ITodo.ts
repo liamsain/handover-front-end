@@ -1,5 +1,5 @@
 import { addDays } from "date-fns";
-import { getRandomNumber, getRandomString, getFakeWords } from "@/utils/utils";
+import { getRandomNumber, getFakeWords } from "@/utils/utils";
 export interface ITodo {
   dueDate: Date;
   text: string;
@@ -8,8 +8,8 @@ export interface ITodo {
   completed: boolean;
 }
 
-export function generate(count: number = 1): ITodo[] {
-  let result: ITodo[] = [];
+export function generate(count = 1): ITodo[] {
+  const result: ITodo[] = [];
   for (let i = 0; i < count; i++) {
     const daysToAdd = getRandomNumber(0, 3);
     const todo: ITodo = {
@@ -19,6 +19,7 @@ export function generate(count: number = 1): ITodo[] {
       lookedAt: false,
       completed: false,
     };
+    result.push(todo);
   }
   return result;
 }
