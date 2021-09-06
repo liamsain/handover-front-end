@@ -26,6 +26,8 @@
     <AddPatientModal
       v-if="addEntryModalIsOpen"
       @close="addEntryModalIsOpen = false"
+      :form="addPatientForm"
+      @submit="onFormSubmit"
     />
   </div>
 </template>
@@ -36,6 +38,7 @@ import { IEntry, generate as generateEntries } from "@/types/IEntry";
 import { format, addDays } from "date-fns";
 import AddPatientModal from "@/components/AddPatientModal.vue";
 import PatientRow from "@/components/PatientRow.vue";
+import AddPatientForm from "@/forms/AddPatientForm";
 export default Vue.extend({
   name: "Home",
   components: { AddPatientModal, PatientRow },
@@ -45,12 +48,18 @@ export default Vue.extend({
       format,
       addDays,
       addEntryModalIsOpen: false,
+      addPatientForm: new AddPatientForm(),
     };
   },
   mounted() {
-    this.entries = generateEntries(10).sort(
+    this.entries = generateEntries(10, 3).sort(
       (a, b) => a.wardNumber - b.wardNumber
     );
+  },
+  methods: {
+    onFormSubmit(data: IEntry) {
+      this.entries.push(data);
+    },
   },
 });
 </script>
@@ -64,7 +73,7 @@ export default Vue.extend({
 .entry-table td,
 .entry-table th {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 4px;
 }
 
 .entry-table tr:nth-child(even) {

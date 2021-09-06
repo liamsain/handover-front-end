@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td>{{ entry.wardNumber }}</td>
+    <td style="text-align: center">{{ entry.wardNumber }}</td>
     <td>
       <p>
         <strong>{{ entry.patientName }}</strong>

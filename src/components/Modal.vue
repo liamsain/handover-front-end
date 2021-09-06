@@ -1,7 +1,7 @@
 <template>
   <transition name="modal">
     <div class="modal-mask">
-      <div class="modal-wrapper" @click.self="$emit('close')">
+      <div class="modal-wrapper" @mousedown.self="$emit('close')">
         <div class="modal-container">
           <div class="modal-header">
             <slot name="header"> default header </slot>
@@ -52,7 +52,7 @@ export default Vue.extend({
 }
 
 .modal-container {
-  width: 300px;
+  width: 450px;
   margin: 0px auto;
   padding: 10px 20px;
   background-color: #fff;
@@ -60,6 +60,8 @@ export default Vue.extend({
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
+  max-height: calc(100vh - 30px);
+  overflow-y: auto;
 }
 
 .modal-body {

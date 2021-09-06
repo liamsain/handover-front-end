@@ -12,8 +12,8 @@ export interface IEntry {
   patientName: string;
   patientNumber: string;
   patientHistory: string;
-  entryCreator: string;
-  entryCreationDate: Date;
+  entryCreator?: string;
+  entryCreationDate?: Date;
   todos: ITodo[];
 }
 

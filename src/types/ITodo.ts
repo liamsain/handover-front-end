@@ -14,7 +14,7 @@ export function generate(count = 1): ITodo[] {
     const daysToAdd = getRandomNumber(0, 3);
     const todo: ITodo = {
       dueDate: addDays(new Date(), daysToAdd),
-      text: getFakeWords(getRandomNumber(5, 50)),
+      text: getFakeWords(getRandomNumber(5, 30)),
       isImportant: false,
       lookedAt: false,
       completed: false,
