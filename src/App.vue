@@ -31,4 +31,7 @@
 p {
   margin: 0;
 }
+ul {
+  padding-inline-start: 20px;
+}
 </style>

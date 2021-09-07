@@ -2,14 +2,14 @@ import { IFormField } from "@/types/IFormField";
 import { ITodo } from "@/types/ITodo";
 import { IEntry } from "@/types/IEntry";
 
-export interface IAddPatientFormConfig {
-  wardNumber?: number;
-  patientName?: string;
-  patientNumber?: string;
-  patientHistory?: string;
-  todos?: ITodo[];
-  entryCreationDate?: Date;
-}
+// export interface IAddPatientFormConfig {
+//   wardNumber?: number;
+//   patientName?: string;
+//   patientNumber?: string;
+//   patientHistory?: string;
+//   todos?: ITodo[];
+//   entryCreationDate?: Date;
+// }
 export default class AddPatientForm {
   wardNumber: IFormField = { value: 0, errorMsg: "" };
   patientName: IFormField = { value: "", errorMsg: "" };
@@ -18,28 +18,16 @@ export default class AddPatientForm {
   todos: ITodo[] = [];
   entryCreationDate?: Date;
 
-  constructor(arg?: IAddPatientFormConfig) {
+  constructor(arg?: IEntry) {
     if (!arg) {
       return;
     }
-    if (arg.wardNumber) {
-      this.wardNumber.value = arg.wardNumber;
-    }
-    if (arg.patientName) {
-      this.patientName.value = arg.patientName;
-    }
-    if (arg.patientNumber) {
-      this.patientNumber.value = arg.patientNumber;
-    }
-    if (arg.patientHistory) {
-      this.patientHistory.value = arg.patientHistory;
-    }
-    if (arg.todos) {
-      this.todos = arg.todos;
-    }
-    if (arg.entryCreationDate) {
-      this.entryCreationDate = arg.entryCreationDate;
-    }
+    this.wardNumber.value = arg.wardNumber;
+    this.patientName.value = arg.patientName;
+    this.patientNumber.value = arg.patientNumber;
+    this.patientHistory.value = arg.patientHistory;
+    this.todos = arg.todos;
+    this.entryCreationDate = arg.entryCreationDate;
   }
   get entry(): IEntry {
     return {

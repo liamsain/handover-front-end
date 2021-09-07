@@ -1,26 +1,33 @@
 <template>
   <tr>
-    <td style="text-align: center">{{ entry.wardNumber }}</td>
+    <td style="text-align: center; padding-top: 16px">
+      {{ entry.wardNumber }}
+    </td>
     <td>
-      <p>
-        <strong>{{ entry.patientName }}</strong>
-      </p>
+      <div
+        style="display: flex; justify-content: space-between; margin-top: 12px"
+      >
+        <p>
+          <strong>{{ entry.patientName }}</strong>
+        </p>
+        <button @click="$emit('edit', entry)">Edit record</button>
+      </div>
       <p>
         <small>{{ entry.patientNumber }}</small>
       </p>
       <p>{{ entry.patientHistory }}</p>
     </td>
     <td>
-      <p v-for="(note, i) in todayTodos" :key="i">{{ note.text }}</p>
+      <PatientRowCell :todos="todayTodos" />
     </td>
     <td>
-      <p v-for="(note, i) in tomorrowTodos" :key="i">{{ note.text }}</p>
+      <PatientRowCell :todos="tomorrowTodos" />
     </td>
     <td>
-      <p v-for="(note, i) in dayAfterTomorrowTodos" :key="i">{{ note.text }}</p>
+      <PatientRowCell :todos="dayAfterTomorrowTodos" />
     </td>
     <td>
-      <p v-for="(note, i) in threeDaysFromNowTodos" :key="i">{{ note.text }}</p>
+      <PatientRowCell :todos="threeDaysFromNowTodos" />
     </td>
   </tr>
 </template>
@@ -30,8 +37,10 @@ import Vue, { PropType } from "vue";
 import { IEntry } from "@/types/IEntry";
 import { ITodo } from "@/types/ITodo";
 import { isSameDay, addDays } from "date-fns";
+import PatientRowCell from "./PatientRowCell.vue";
 export default Vue.extend({
   name: "PatientRow",
+  components: { PatientRowCell },
   props: {
     entry: {
       type: Object as PropType<IEntry>,

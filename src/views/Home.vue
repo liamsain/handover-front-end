@@ -11,7 +11,7 @@
         <tr>
           <th>Ward</th>
           <th>Patient</th>
-          <th>{{ format(new Date(), "EEE do") }}</th>
+          <th>{{ format(new Date(), "MMM EEE do") }}</th>
           <th>{{ format(addDays(new Date(), 1), "EEE do") }}</th>
           <th>{{ format(addDays(new Date(), 2), "EEE do") }}</th>
           <th>{{ format(addDays(new Date(), 3), "EEE do") }}</th>
@@ -20,6 +20,7 @@
           v-for="entry in entries"
           :entry="entry"
           :key="entry.patientNumber"
+          @edit="onEditRow"
         />
       </table>
     </div>
@@ -52,12 +53,17 @@ export default Vue.extend({
     };
   },
   mounted() {
-    this.entries = generateEntries(10, 3).sort(
+    this.entries = generateEntries(10, 5).sort(
       (a, b) => a.wardNumber - b.wardNumber
     );
   },
   methods: {
+    onEditRow(entry: IEntry) {
+      this.addPatientForm = new AddPatientForm(entry);
+      this.addEntryModalIsOpen = true;
+    },
     onFormSubmit(data: IEntry) {
+      this.addEntryModalIsOpen = false;
       this.entries.push(data);
     },
   },
@@ -69,7 +75,9 @@ export default Vue.extend({
   border-collapse: collapse;
   width: 100%;
 }
-
+.entry-table td {
+  vertical-align: top;
+}
 .entry-table td,
 .entry-table th {
   border: 1px solid #ddd;

@@ -1,6 +1,5 @@
 import { ITodo, generate as generateTodos } from "./ITodo";
 import {
-  getRandomString,
   getRandomName,
   getRandomNumberString,
   getRandomNumber,

@@ -2,7 +2,7 @@
   <Modal @close="$emit('close')">
     <div slot="header" class="add-entry-modal__title">
       <h3>Add patient</h3>
-      <button @click="$emit('close')">X</button>
+      <button @click="$emit('close')">Close</button>
     </div>
     <div slot="body">
       <form>
@@ -78,7 +78,7 @@
       </form>
     </div>
     <div slot="footer" style="text-align: right">
-      <button @click="submit">Add patient</button>
+      <button @click="submit">Submit</button>
     </div>
   </Modal>
 </template>
@@ -145,5 +145,6 @@ export default Vue.extend({
 textarea {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   width: 100%;
+  padding: 4px;
 }
 </style>
