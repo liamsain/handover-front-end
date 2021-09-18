@@ -1,30 +1,14 @@
 <template>
-  <ul>
-    <li v-for="(todo, i) in todos" :key="i">
-      {{ todo.text }}
-      <div>
-        <input
-          type="checkbox"
-          :id="i + 'today-looked-at'"
-          v-model="todo.lookedAt"
-        /><label :for="i + 'today-looked-at'"><small>Looked at</small></label>
-      </div>
-      <div>
-        <input
-          type="checkbox"
-          :id="i + 'today-completed'"
-          v-model="todo.completed"
-        /><label :for="i + 'today-completed'"><small>Completed</small></label>
-      </div>
-    </li>
-  </ul>
+  <TodoList v-model="todos" style="margin-top: 12px" />
 </template>
 
 <script lang="ts">
 import Vue, { PropType } from "vue";
 import { ITodo } from "@/types/ITodo";
+import TodoList from "./TodoList.vue";
 export default Vue.extend({
   name: "PatientRowCell",
+  components: { TodoList },
   props: {
     todos: {
       type: Array as PropType<Array<ITodo>>,

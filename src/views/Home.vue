@@ -4,14 +4,14 @@
       style="display: flex; justify-content: space-between; align-items: center"
     >
       <h3>Handover</h3>
-      <button @click="addEntryModalIsOpen = true">Add entry</button>
+      <button @click="onAddEntry">Add entry</button>
     </div>
     <div style="overflow-x: auto">
       <table class="entry-table">
         <tr>
           <th>Ward</th>
           <th>Patient</th>
-          <th>{{ format(new Date(), "MMM EEE do") }}</th>
+          <th>{{ format(new Date(), "MMM, EEE do") }}</th>
           <th>{{ format(addDays(new Date(), 1), "EEE do") }}</th>
           <th>{{ format(addDays(new Date(), 2), "EEE do") }}</th>
           <th>{{ format(addDays(new Date(), 3), "EEE do") }}</th>
@@ -58,6 +58,10 @@ export default Vue.extend({
     );
   },
   methods: {
+    onAddEntry() {
+      this.addPatientForm = new AddPatientForm();
+      this.addEntryModalIsOpen = true;
+    },
     onEditRow(entry: IEntry) {
       this.addPatientForm = new AddPatientForm(entry);
       this.addEntryModalIsOpen = true;
@@ -65,6 +69,7 @@ export default Vue.extend({
     onFormSubmit(data: IEntry) {
       this.addEntryModalIsOpen = false;
       this.entries.push(data);
+      this.entries = this.entries.sort((a, b) => a.wardNumber - b.wardNumber);
     },
   },
 });

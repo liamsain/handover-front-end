@@ -18,16 +18,32 @@
       <p>{{ entry.patientHistory }}</p>
     </td>
     <td>
-      <PatientRowCell :todos="todayTodos" />
+      <TodoList
+        v-model="todayTodos"
+        :date="new Date()"
+        @saveNewTodo="onSaveNewTodo"
+      />
     </td>
     <td>
-      <PatientRowCell :todos="tomorrowTodos" />
+      <TodoList
+        v-model="tomorrowTodos"
+        :date="addDays(new Date(), 1)"
+        @saveNewTodo="onSaveNewTodo"
+      />
     </td>
     <td>
-      <PatientRowCell :todos="dayAfterTomorrowTodos" />
+      <TodoList
+        v-model="dayAfterTomorrowTodos"
+        :date="addDays(new Date(), 2)"
+        @saveNewTodo="onSaveNewTodo"
+      />
     </td>
     <td>
-      <PatientRowCell :todos="threeDaysFromNowTodos" />
+      <TodoList
+        v-model="threeDaysFromNowTodos"
+        :date="addDays(new Date(), 3)"
+        @saveNewTodo="onSaveNewTodo"
+      />
     </td>
   </tr>
 </template>
@@ -37,14 +53,19 @@ import Vue, { PropType } from "vue";
 import { IEntry } from "@/types/IEntry";
 import { ITodo } from "@/types/ITodo";
 import { isSameDay, addDays } from "date-fns";
-import PatientRowCell from "./PatientRowCell.vue";
+import TodoList from "./TodoList.vue";
 export default Vue.extend({
   name: "PatientRow",
-  components: { PatientRowCell },
+  components: { TodoList },
   props: {
     entry: {
       type: Object as PropType<IEntry>,
     },
+  },
+  data() {
+    return {
+      addDays,
+    };
   },
   computed: {
     todayTodos(): ITodo[] {
@@ -65,6 +86,9 @@ export default Vue.extend({
       return this.entry.todos.filter((x) =>
         isSameDay(new Date(x.dueDate), day)
       );
+    },
+    onSaveNewTodo(todo: ITodo) {
+      this.entry.todos.push(todo);
     },
   },
 });

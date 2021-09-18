@@ -53,27 +53,42 @@
           </label>
         </div>
         <div class="add-entry-modal__text-area">
-          <label for="add-entry__today-notes"> Today tasks<br /> </label>
-          <button type="button">Add task</button>
+          <label for="add-entry__today-notes"
+            ><strong> Today tasks</strong><br />
+          </label>
+          <TodoList v-model="todayTodos" :date="new Date()" />
         </div>
         <div class="add-entry-modal__text-area">
           <label for="add-entry__tomorrow-notes">
-            {{ format(addDays(new Date(), 1), "EEE, do") }} tasks<br />
+            <strong
+              >{{ format(addDays(new Date(), 1), "EEE, do") }} tasks</strong
+            ><br />
           </label>
-          <button type="button">Add task</button>
+
+          <TodoList v-model="tomorrowTodos" :date="addDays(new Date(), 1)" />
         </div>
         <div class="add-entry-modal__text-area">
           <label for="add-entry__day-after-tomorrow-notes">
-            {{ format(addDays(new Date(), 2), "EEE, do") }} tasks<br />
+            <strong
+              >{{ format(addDays(new Date(), 2), "EEE, do") }} tasks</strong
+            ><br />
           </label>
-          <button type="button">Add task</button>
+          <TodoList
+            v-model="dayAfterTomorrowTodos"
+            :date="addDays(new Date(), 2)"
+          />
         </div>
 
         <div class="add-entry-modal__text-area">
           <label for="add-entry__three-days-from-now-notes">
-            {{ format(addDays(new Date(), 3), "EEE, do") }} tasks<br />
+            <strong
+              >{{ format(addDays(new Date(), 3), "EEE, do") }} tasks</strong
+            ><br />
           </label>
-          <button type="button">Add task</button>
+          <TodoList
+            v-model="threeDaysFromNowTodos"
+            :date="addDays(new Date(), 3)"
+          />
         </div>
       </form>
     </div>
@@ -87,17 +102,33 @@
 import Vue, { PropType } from "vue";
 import Modal from "./Modal.vue";
 import AddPatientForm from "@/forms/AddPatientForm";
-import { addDays, format } from "date-fns";
-
+import { addDays, format, isSameDay } from "date-fns";
+import TodoList from "./TodoList.vue";
+import { ITodo } from "@/types/ITodo";
 export default Vue.extend({
   name: "AddPatientModal",
-  components: { Modal },
+  components: { Modal, TodoList },
   props: {
     form: {
       type: Object as PropType<AddPatientForm>,
       required: true,
     },
   },
+  computed: {
+    todayTodos(): ITodo[] {
+      return this.getNotesForDay(new Date());
+    },
+    tomorrowTodos(): ITodo[] {
+      return this.getNotesForDay(addDays(new Date(), 1));
+    },
+    dayAfterTomorrowTodos(): ITodo[] {
+      return this.getNotesForDay(addDays(new Date(), 2));
+    },
+    threeDaysFromNowTodos(): ITodo[] {
+      return this.getNotesForDay(addDays(new Date(), 3));
+    },
+  },
+
   data() {
     return {
       format,
@@ -111,6 +142,11 @@ export default Vue.extend({
     }
   },
   methods: {
+    getNotesForDay(day: Date): ITodo[] {
+      return this.form.todos.filter((x: ITodo) =>
+        isSameDay(new Date(x.dueDate), day)
+      );
+    },
     submit() {
       this.$emit("submit", this.form.entry);
     },
