@@ -31,6 +31,7 @@
         v-model="newTodoText"
         placeholder="Task"
         ref="newTodoField"
+        style="width: 90%"
         @keyup.enter="onSaveNewTodo"
       />
       <div style="margin-top: 4px">

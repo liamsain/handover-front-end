@@ -52,13 +52,13 @@
             />
           </label>
         </div>
-        <div class="add-entry-modal__text-area">
+        <div class="add-entry-modal__todo-list">
           <label for="add-entry__today-notes"
             ><strong> Today tasks</strong><br />
           </label>
           <TodoList v-model="todayTodos" :date="new Date()" />
         </div>
-        <div class="add-entry-modal__text-area">
+        <div class="add-entry-modal__todo-list">
           <label for="add-entry__tomorrow-notes">
             <strong
               >{{ format(addDays(new Date(), 1), "EEE, do") }} tasks</strong
@@ -67,7 +67,7 @@
 
           <TodoList v-model="tomorrowTodos" :date="addDays(new Date(), 1)" />
         </div>
-        <div class="add-entry-modal__text-area">
+        <div class="add-entry-modal__todo-list">
           <label for="add-entry__day-after-tomorrow-notes">
             <strong
               >{{ format(addDays(new Date(), 2), "EEE, do") }} tasks</strong
@@ -79,7 +79,7 @@
           />
         </div>
 
-        <div class="add-entry-modal__text-area">
+        <div class="add-entry-modal__todo-list">
           <label for="add-entry__three-days-from-now-notes">
             <strong
               >{{ format(addDays(new Date(), 3), "EEE, do") }} tasks</strong
@@ -182,5 +182,8 @@ textarea {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   width: 100%;
   padding: 4px;
+}
+.add-entry-modal__todo-list {
+  margin-bottom: 20px;
 }
 </style>
